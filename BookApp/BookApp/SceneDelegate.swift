@@ -17,10 +17,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let viewController = ViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let firstViewController = UINavigationController(rootViewController: SearchViewController())
+        let secondViewController = UINavigationController(rootViewController: SavedBookViewController())
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers([firstViewController, secondViewController], animated: true)
 
-        window?.rootViewController = navigationController
+        if let items = tabBarController.tabBar.items {
+            items[0].selectedImage = UIImage(systemName: "magnifyingglass.circle.fill")
+            items[0].image = UIImage(systemName: "magnifyingglass.circle")
+            items[0].title = "검색"
+            items[1].selectedImage = UIImage(systemName: "book.fill")
+            items[1].image = UIImage(systemName: "book")
+            items[1].title = "담은 책"
+        }
+
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 
