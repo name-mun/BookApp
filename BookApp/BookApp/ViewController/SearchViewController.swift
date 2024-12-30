@@ -68,14 +68,27 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - searchResultCollectionView DataSource 설정
 
 extension SearchViewController: UICollectionViewDataSource {
+    // 섹셕별 아이템 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10
     }
 
+    // 셀 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.id, for: indexPath) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SearchResultCollectionViewCell.id,
+            for: indexPath
+        ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
         return cell
     }
 
-
+    // 헤더 설정
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SearchResultCollectionViewHeader.id,
+            for: indexPath
+        ) as? SearchResultCollectionViewHeader else { return UICollectionReusableView() }
+        return header
+    }
 }

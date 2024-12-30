@@ -20,19 +20,11 @@ class SearchView: UIView {
         return searchBar
     }()
 
-    private let searchResultLabel: UILabel = {
-        let label = UILabel()
-        label.text = "검색 결과"
-        label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 25)
-        label.textAlignment = .left
-        return label
-    }()
-
     lazy var SearchResultCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.id)
+        collectionView.register(SearchResultCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultCollectionViewHeader.id)
         return collectionView
     }()
 
@@ -56,7 +48,6 @@ class SearchView: UIView {
 
         [
             bookSearchBar,
-            searchResultLabel,
             SearchResultCollectionView
         ].forEach {
             addSubview($0)
@@ -67,13 +58,8 @@ class SearchView: UIView {
             $0.horizontalEdges.equalTo(safeAreaLayoutGuide.snp.horizontalEdges).inset(15)
         }
 
-        searchResultLabel.snp.makeConstraints {
-            $0.top.equalTo(bookSearchBar.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(10)
-        }
-
         SearchResultCollectionView.snp.makeConstraints {
-            $0.top.equalTo(searchResultLabel.snp.bottom).offset(20)
+            $0.top.equalTo(bookSearchBar.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(10)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
@@ -96,6 +82,18 @@ class SearchView: UIView {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(44)
+        )
+
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [header]
 
         return UICollectionViewCompositionalLayout(section: section)
     }
