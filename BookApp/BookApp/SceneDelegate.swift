@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let firstViewController = UINavigationController(rootViewController: MainViewController())
+        let firstViewController = UINavigationController(rootViewController: SearchViewController())
         let secondViewController = UINavigationController(rootViewController: SavedBookViewController())
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers([firstViewController, secondViewController], animated: true)
