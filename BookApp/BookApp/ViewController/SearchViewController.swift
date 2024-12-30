@@ -13,6 +13,8 @@ class SearchViewController: UIViewController {
 
     // MARK: - UI 컴포넌트
 
+    private let searchView = SearchView()
+
     // 모달 연결 확인용 테스트 버튼
     private let testButton: UIButton = {
         let button = UIButton()
@@ -23,10 +25,20 @@ class SearchViewController: UIViewController {
 
     // MARK: - 생명주기 메서드
 
+    override func loadView() {
+        super.loadView()
+        view = searchView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupAction()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
 
     // MARK: - 레이아웃 설정
@@ -50,17 +62,30 @@ class SearchViewController: UIViewController {
             guard let self = self else { return }
             self.testButtonTapped()
         }, for: .touchUpInside)
+
+        // 책 검색 서치바 delegate 설정
+        searchView.bookSearchBar.delegate = self
     }
 }
 
 // MARK: - 액션 설정
 
 extension SearchViewController {
-    // 테스트 버튼 선택시 모달 실행
+    // 테스트 버튼 선택 시 모달 실행
     private func testButtonTapped() {
         let bookInfoVC = BookInfoViewController()
 
         self.navigationController?.modalPresentationStyle = .fullScreen
         present(bookInfoVC, animated: true)
     }
+}
+
+// MARK: - bookSearchBar Delegate 설정
+
+extension SearchViewController: UISearchBarDelegate {
+    // 텍스트 검색시 실행
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("검색")
+    }
+
 }
