@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		BA4DC6462D2239D600F5A66D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA4DC6452D2239D600F5A66D /* SnapKit */; };
+		BA7824832D23B8DB002FAD72 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BA7824822D23B8DB002FAD72 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BA41B6382D1EC57A0002FC87 /* BookApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA7824822D23B8DB002FAD72 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -50,6 +52,7 @@
 		BA41B62F2D1EC57A0002FC87 = {
 			isa = PBXGroup;
 			children = (
+				BA7824822D23B8DB002FAD72 /* Config.xcconfig */,
 				BA41B63A2D1EC57A0002FC87 /* BookApp */,
 				BA41B6392D1EC57A0002FC87 /* Products */,
 			);
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA7824832D23B8DB002FAD72 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +153,7 @@
 /* Begin XCBuildConfiguration section */
 		BA41B64C2D1EC57B0002FC87 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA7824822D23B8DB002FAD72 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -157,6 +162,7 @@
 				DEVELOPMENT_TEAM = 5S2D2NU5WR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -184,6 +190,7 @@
 				DEVELOPMENT_TEAM = 5S2D2NU5WR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
