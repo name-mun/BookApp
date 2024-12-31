@@ -11,7 +11,16 @@ import SnapKit
 
 class BookInfoViewController: UIViewController {
 
+    // MARK: - UI 컴포넌트
+
+    private let bookInfoView = BookInfoView()
+
     // MARK: - 생명주기 메서드
+
+    override func loadView() {
+        super.loadView()
+        view = bookInfoView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,5 +31,11 @@ class BookInfoViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
+    }
+
+    // MARK: - 데이터 설정
+
+    func configure(_ book: Book) {
+        print(book)
     }
 }
