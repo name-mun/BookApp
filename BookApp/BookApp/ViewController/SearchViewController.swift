@@ -15,6 +15,8 @@ class SearchViewController: UIViewController {
 
     private let searchView = SearchView()
 
+    private var dataSouce = [Book]() // API로 부터 받은 데이터 저장
+
     // MARK: - 생명주기 메서드
 
     override func loadView() {
@@ -60,7 +62,17 @@ extension SearchViewController {
 extension SearchViewController: UISearchBarDelegate {
     // 텍스트 검색시 실행
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("검색")
+        guard let searchText = self.searchView.bookSearchBar.text else { return }
+        NetworkManager.shared.fetchData(title: searchText) { [weak self] (result: BookResponse?) in
+            guard let self, let result else { return }
+
+            self.dataSouce = result.documents // 데이터 저장
+
+            // 컬렉션뷰 리로드
+            DispatchQueue.main.async {
+                self.searchView.SearchResultCollectionView.reloadData()
+            }
+        }
     }
 
 }
@@ -70,7 +82,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDataSource {
     // 섹셕별 아이템 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        dataSouce.count
     }
 
     // 셀 설정
@@ -79,6 +91,7 @@ extension SearchViewController: UICollectionViewDataSource {
             withReuseIdentifier: SearchResultCollectionViewCell.id,
             for: indexPath
         ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
+        cell.configure(dataSouce[indexPath.row])
         return cell
     }
 

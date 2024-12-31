@@ -18,8 +18,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     // 제목 라벨
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "세이노의 가르침" // 테스트용 텍스트
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 15)
         label.textColor = .black
         label.textAlignment = .left
         return label
@@ -28,18 +27,16 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     // 저자 라벨
     private let authorLabel: UILabel = {
         let label = UILabel()
-        label.text = "세이노" // 테스트용 텍스트
-        label.font = .systemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: 12)
         label.textColor = .systemGray
-        label.textAlignment = .center
+        label.textAlignment = .right
         return label
     }()
 
     // 가격 라벨
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "14,000원" // 테스트용 텍스트
-        label.font = .systemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: 12)
         label.textColor = .black
         label.textAlignment = .right
         return label
@@ -73,16 +70,18 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
+            $0.width.equalTo(180)
         }
 
         authorLabel.snp.makeConstraints {
-            $0.trailing.equalTo(priceLabel.snp.leading).offset(-25)
+            $0.trailing.equalTo(priceLabel.snp.leading).offset(-5)
             $0.centerY.equalToSuperview()
         }
 
         priceLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
+            $0.width.equalTo(60)
         }
 
 
@@ -90,7 +89,20 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 
     // MARK: - 데이터 설정
 
-    func configure() {
+    func configure(_ book: Book) {
+        // 제목 설정
+        if let title = book.title {
+            titleLabel.text = title
+        }
 
+        // 저자 설정
+        if let authors = book.authors {
+            authorLabel.text = authors.first
+        }
+
+        // 가격 설정
+        if let price = book.price {
+            priceLabel.text = PriceFormatterModel.wonFormatter(price)
+        }
     }
 }
