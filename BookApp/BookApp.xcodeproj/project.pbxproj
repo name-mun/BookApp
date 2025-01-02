@@ -6,8 +6,18 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BA2EC5622D26618600E771D1 /* SaveBook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2EC5602D26618600E771D1 /* SaveBook+CoreDataClass.swift */; };
+		BA2EC6142D2697B300E771D1 /* SaveBook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2EC6132D2697B300E771D1 /* SaveBook+CoreDataProperties.swift */; };
+		BA4DC6462D2239D600F5A66D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA4DC6452D2239D600F5A66D /* SnapKit */; };
+		BA7824832D23B8DB002FAD72 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BA7824822D23B8DB002FAD72 /* Config.xcconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		BA2EC5602D26618600E771D1 /* SaveBook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveBook+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BA2EC6132D2697B300E771D1 /* SaveBook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveBook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BA41B6382D1EC57A0002FC87 /* BookApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA7824822D23B8DB002FAD72 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA4DC6462D2239D600F5A66D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +56,9 @@
 		BA41B62F2D1EC57A0002FC87 = {
 			isa = PBXGroup;
 			children = (
+				BA2EC6132D2697B300E771D1 /* SaveBook+CoreDataProperties.swift */,
+				BA2EC5602D26618600E771D1 /* SaveBook+CoreDataClass.swift */,
+				BA7824822D23B8DB002FAD72 /* Config.xcconfig */,
 				BA41B63A2D1EC57A0002FC87 /* BookApp */,
 				BA41B6392D1EC57A0002FC87 /* Products */,
 			);
@@ -78,6 +92,7 @@
 			);
 			name = BookApp;
 			packageProductDependencies = (
+				BA4DC6452D2239D600F5A66D /* SnapKit */,
 			);
 			productName = BookApp;
 			productReference = BA41B6382D1EC57A0002FC87 /* BookApp.app */;
@@ -107,6 +122,9 @@
 			);
 			mainGroup = BA41B62F2D1EC57A0002FC87;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BA4DC6442D2239D600F5A66D /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BA41B6392D1EC57A0002FC87 /* Products */;
 			projectDirPath = "";
@@ -122,6 +140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA7824832D23B8DB002FAD72 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +151,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA2EC6142D2697B300E771D1 /* SaveBook+CoreDataProperties.swift in Sources */,
+				BA2EC5622D26618600E771D1 /* SaveBook+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +161,7 @@
 /* Begin XCBuildConfiguration section */
 		BA41B64C2D1EC57B0002FC87 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA7824822D23B8DB002FAD72 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -148,6 +170,7 @@
 				DEVELOPMENT_TEAM = 5S2D2NU5WR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -175,6 +198,7 @@
 				DEVELOPMENT_TEAM = 5S2D2NU5WR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -333,6 +357,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BA4DC6442D2239D600F5A66D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BA4DC6452D2239D600F5A66D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA4DC6442D2239D600F5A66D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BA41B6302D1EC57A0002FC87 /* Project object */;
 }

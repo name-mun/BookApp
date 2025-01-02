@@ -84,3 +84,6 @@ DerivedData/
 ## Thumbnails
 .idea/
 .idea_modules/
+
+## Configuration Files
+*.xcconfig
