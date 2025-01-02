@@ -13,6 +13,8 @@ class BookInfoViewController: UIViewController {
 
     // MARK: - UI 컴포넌트
 
+    private var book: Book?
+
     private let bookInfoView = BookInfoView()
 
     // MARK: - 생명주기 메서드
@@ -53,6 +55,8 @@ class BookInfoViewController: UIViewController {
     // MARK: - 데이터 설정
 
     func configure(_ book: Book) {
+        self.book = book
+
         if let thumbnail = book.thumbnail {
             downloadImage(thumbnail)
         }
@@ -71,7 +75,9 @@ extension BookInfoViewController {
 
     // 담기 버튼 설정
     private func saveButtonTapped() {
-        print("저장")
+        guard let book = self.book else { return }
+        UserDataManager.shared.createData(book)
+        dismiss(animated: true)
     }
 }
 

@@ -48,8 +48,8 @@ class SearchViewController: UIViewController {
         searchView.bookSearchBar.delegate = self
 
         // 책 검색 결과 컬렉션뷰 설정
-        searchView.SearchResultCollectionView.delegate = self
-        searchView.SearchResultCollectionView.dataSource = self
+        searchView.searchResultCollectionView.delegate = self
+        searchView.searchResultCollectionView.dataSource = self
     }
 }
 
@@ -71,7 +71,7 @@ extension SearchViewController: UISearchBarDelegate {
 
             // 컬렉션뷰 리로드
             DispatchQueue.main.async {
-                self.searchView.SearchResultCollectionView.reloadData()
+                self.searchView.searchResultCollectionView.reloadData()
             }
         }
     }
@@ -102,10 +102,11 @@ extension SearchViewController: UICollectionViewDataSource {
     // 셀 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SearchResultCollectionViewCell.id,
+            withReuseIdentifier: BookListCollectionViewCell.id,
             for: indexPath
-        ) as? SearchResultCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(dataSouce[indexPath.row])
+        ) as? BookListCollectionViewCell else { return UICollectionViewCell() }
+        let book  = dataSouce[indexPath.row]
+        cell.configure(title: book.title, author: book.authors?.first, price: book.price)
         return cell
     }
 
