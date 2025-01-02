@@ -14,5 +14,5 @@ struct Book: Decodable {
     let authors: [String]?
     let price: Int?
     let contents: String?
-    let thumnail: String?
+    let thumbnail: String?
 }

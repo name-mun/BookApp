@@ -47,7 +47,8 @@ class SearchViewController: UIViewController {
         // 책 검색 서치바 delegate 설정
         searchView.bookSearchBar.delegate = self
 
-        // 책 검색 결과 컬렉션뷰 dataSource 설정
+        // 책 검색 결과 컬렉션뷰 설정
+        searchView.SearchResultCollectionView.delegate = self
         searchView.SearchResultCollectionView.dataSource = self
     }
 }
@@ -75,6 +76,19 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
 
+}
+
+// MARK: - searchResultCollectionView Delegate 설정
+
+extension SearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let bookInfoVC = BookInfoViewController()
+        bookInfoVC.configure(dataSouce[indexPath.row])
+
+        self.navigationController?.modalPresentationStyle = .fullScreen
+        present(bookInfoVC, animated: true)
+
+    }
 }
 
 // MARK: - searchResultCollectionView DataSource 설정
