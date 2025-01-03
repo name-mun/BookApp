@@ -43,6 +43,8 @@ class UserDataManager {
             newSaveBook.setValue(book.title, forKey: SaveBook.Key.title)
             newSaveBook.setValue(book.authors?.first, forKey: SaveBook.Key.author)
             newSaveBook.setValue(book.price, forKey: SaveBook.Key.price)
+            newSaveBook.setValue(book.contents, forKey: SaveBook.Key.contents)
+            newSaveBook.setValue(book.thumbnail, forKey: SaveBook.Key.thumbnail)
 
             saveToContext()
         }
@@ -62,8 +64,9 @@ class UserDataManager {
     }
 
     // 데이터 삭제
-    func deleteData(_ title: String) {
-        // TODO: -
+    func deleteData(_ book: SaveBook) {
+        context.delete(book)
+        saveToContext()
     }
 
     // 데이터 전체 삭제

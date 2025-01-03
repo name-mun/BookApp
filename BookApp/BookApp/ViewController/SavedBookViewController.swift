@@ -39,6 +39,7 @@ class SavedBookViewController: UIViewController {
     // MARK: - 레이아웃 설정
 
     private func setupUI() {
+        savedBookView.savedBookCollectionView.delegate = self
         savedBookView.savedBookCollectionView.dataSource = self
     }
 
@@ -78,6 +79,28 @@ extension SavedBookViewController {
 // MARK: - 컬렉션뷰 Delegate 설정
 
 extension SavedBookViewController: UICollectionViewDelegate {
+
+    // 셀 선택 시 실행
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let books = books else { return }
+        let bookInfoVC = BookInfoViewController()
+
+        let book = books[indexPath.row]
+
+        let thisBook = Book(
+            title: book.title,
+            authors: [book.author ?? ""],
+            price: Int(book.price),
+            contents: book.contents,
+            thumbnail: book.thumbnail
+        )
+
+        bookInfoVC.configure(thisBook, true, indexPath.item)
+        bookInfoVC.delegate = self
+
+        self.navigationController?.modalPresentationStyle = .fullScreen
+        present(bookInfoVC, animated: true)
+    }
 }
 
 // MARK: - 컬렉션뷰 DataSource 설정
@@ -101,5 +124,18 @@ extension SavedBookViewController: UICollectionViewDataSource {
         }
 
         return cell
+    }
+}
+
+// MARK: - BookInfoViewController Delegate 설정
+
+extension SavedBookViewController: BookInfoViewControllerDelegate {
+    func updateData(_ viewController: UIViewController, index: Int) {
+        let deleteBook = books?.remove(at: index)
+
+        guard let deleteBook = deleteBook else { return }
+
+        UserDataManager.shared.deleteData(deleteBook)
+        savedBookView.savedBookCollectionView.reloadData()
     }
 }

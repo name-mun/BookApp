@@ -9,11 +9,19 @@ import UIKit
 
 import SnapKit
 
+protocol BookInfoViewControllerDelegate: AnyObject {
+    func updateData(_ viewController: UIViewController, index: Int)
+}
+
+
 class BookInfoViewController: UIViewController {
 
     // MARK: - UI 컴포넌트
 
     private var book: Book?
+    private var index: Int?
+    private var isSavedView: Bool?
+    weak var delegate: BookInfoViewControllerDelegate?
 
     private let bookInfoView = BookInfoView()
 
@@ -54,14 +62,16 @@ class BookInfoViewController: UIViewController {
 
     // MARK: - 데이터 설정
 
-    func configure(_ book: Book) {
+    func configure(_ book: Book, _ isSavedView: Bool, _ index: Int?) {
         self.book = book
+        self.isSavedView = isSavedView
+        self.index = index
 
         if let thumbnail = book.thumbnail {
             downloadImage(thumbnail)
         }
 
-        bookInfoView.configureData(book)
+        bookInfoView.configureData(book, isSavedView)
     }
 }
 
@@ -76,7 +86,17 @@ extension BookInfoViewController {
     // 담기 버튼 설정
     private func saveButtonTapped() {
         guard let book = self.book else { return }
-        UserDataManager.shared.createData(book)
+
+        guard let isSavedView = isSavedView else { return }
+
+        if isSavedView {
+            guard let index = index else { return }
+            self.delegate?.updateData(self, index: index)
+
+        } else {
+            UserDataManager.shared.createData(book)
+
+        }
         dismiss(animated: true)
     }
 }

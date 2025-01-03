@@ -83,7 +83,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bookInfoVC = BookInfoViewController()
-        bookInfoVC.configure(dataSouce[indexPath.row])
+        bookInfoVC.configure(dataSouce[indexPath.row], false, nil)
 
         self.navigationController?.modalPresentationStyle = .fullScreen
         present(bookInfoVC, animated: true)
