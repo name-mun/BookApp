@@ -34,6 +34,7 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        searchView.searchResultCollectionView.reloadData()
     }
 
     // MARK: - 레이아웃 설정
@@ -89,12 +90,19 @@ extension SearchViewController: UICollectionViewDelegate {
         self.navigationController?.modalPresentationStyle = .fullScreen
         present(bookInfoVC, animated: true)
 
+        recentBook.append(searchResult[indexPath.row])
+
     }
 }
 
 // MARK: - searchResultCollectionView DataSource 설정
 
 extension SearchViewController: UICollectionViewDataSource {
+    // 섹션 갯수
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return Section.allCases.count
+    }
+
     // 섹셕별 아이템 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch Section(rawValue: section) {
@@ -108,13 +116,33 @@ extension SearchViewController: UICollectionViewDataSource {
 
     // 셀 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: BookListCollectionViewCell.id,
-            for: indexPath
-        ) as? BookListCollectionViewCell else { return UICollectionViewCell() }
-        let book  = searchResult[indexPath.row]
-        cell.configure(title: book.title, author: book.authors?.first, price: book.price)
-        return cell
+
+        switch Section(rawValue: indexPath.section) {
+        case .recentBook:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RecentBookCollectionViewCell.id,
+                for: indexPath
+            ) as? RecentBookCollectionViewCell else { return UICollectionViewCell() }
+            let book = recentBook[indexPath.item]
+            if let thumbnail = book.thumbnail {
+                NetworkManager.shared.downloadImage(thumbnail) { image in
+                    DispatchQueue.main.async {
+                        cell.configure(image)
+                    }
+                }
+            }
+            return cell
+
+        case .searchResult:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: BookListCollectionViewCell.id,
+                for: indexPath
+            ) as? BookListCollectionViewCell else { return UICollectionViewCell() }
+            let book  = searchResult[indexPath.row]
+            cell.configure(title: book.title, author: book.authors?.first, price: book.price)
+            return cell
+        default: return UICollectionViewCell()
+        }
     }
 
     // 헤더 설정
@@ -124,6 +152,10 @@ extension SearchViewController: UICollectionViewDataSource {
             withReuseIdentifier: SearchResultCollectionViewHeader.id,
             for: indexPath
         ) as? SearchResultCollectionViewHeader else { return UICollectionReusableView() }
+
+        let sectionType = Section.allCases[indexPath.section]
+        header.configure(sectionType.title)
+        
         return header
     }
 }

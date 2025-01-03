@@ -21,7 +21,7 @@ class SearchView: UIView {
     }()
 
     lazy var searchResultCollectionView: UICollectionView = {
-        let collectionView = BookListCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = BookListCollectionView(2)
         collectionView.register(SearchResultCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultCollectionViewHeader.id)
         return collectionView
     }()

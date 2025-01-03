@@ -44,7 +44,7 @@ class SavedBookView: UIView {
         return button
     }()
 
-    let savedBookCollectionView = BookListCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let savedBookCollectionView = BookListCollectionView(1)
 
 
     // MARK: - 생명주기 메서드
@@ -91,7 +91,7 @@ class SavedBookView: UIView {
         }
 
         savedBookCollectionView.snp.makeConstraints {
-            $0.top.equalTo(headerStackView.snp.bottom).offset(20)
+            $0.top.equalTo(headerStackView.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(10)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
