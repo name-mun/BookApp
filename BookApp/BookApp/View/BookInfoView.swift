@@ -93,9 +93,7 @@ class BookInfoView: UIView {
     // 담기 버튼
     let saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("담기", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemGreen
         button.layer.cornerRadius = 20
         return button
     }()
@@ -191,11 +189,19 @@ class BookInfoView: UIView {
 
     // MARK: - 데이터 설정
 
-    func configureData(_ book: Book) {
+    func configureData(_ book: Book, _ isSavedView: Bool) {
         titleLabel.text = book.title
         authorLabel.text = book.authors?.first
         priceLabel.text = PriceFormatterModel.wonFormatter(book.price ?? 0)
         contentsLabel.text = book.contents
+
+        if isSavedView {
+            saveButton.setTitle("삭제", for: .normal)
+            saveButton.backgroundColor = .systemRed
+        } else {
+            saveButton.setTitle("담기", for: .normal)
+            saveButton.backgroundColor = .systemGreen
+        }
 
     }
 

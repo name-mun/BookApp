@@ -16,5 +16,7 @@ public class SaveBook: NSManagedObject {
         static let title = "title"
         static let author = "author"
         static let price = "price"
+        static let contents = "contents"
+        static let thumbnail = "thumbnail"
     }
 }
