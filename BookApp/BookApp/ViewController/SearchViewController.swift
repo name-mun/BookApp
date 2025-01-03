@@ -91,8 +91,11 @@ extension SearchViewController: UICollectionViewDelegate {
         self.navigationController?.modalPresentationStyle = .fullScreen
         present(bookInfoVC, animated: true)
 
-        recentBook.append(searchResult[indexPath.row])
+        if recentBook.count > 9 {
+            recentBook.removeLast()
+        }
 
+        recentBook.insert(searchResult[indexPath.row], at: 0)
     }
 }
 
