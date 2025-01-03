@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol BookInfoViewControllerDelegate: AnyObject {
-    func updateData(_ viewController: UIViewController, index: Int)
+    func updateData(_ viewController: UIViewController, index: Int?)
 }
 
 
@@ -87,6 +87,7 @@ class BookInfoViewController: UIViewController {
 extension BookInfoViewController {
     // 닫기 버튼 설정
     private func closeButtonTapped() {
+        self.delegate?.updateData(self, index: nil)
         dismiss(animated: true)
     }
 
@@ -104,6 +105,7 @@ extension BookInfoViewController {
             UserDataManager.shared.createData(book)
 
         }
+        self.delegate?.updateData(self, index: nil)
         dismiss(animated: true)
     }
 }

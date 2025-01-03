@@ -130,7 +130,8 @@ extension SavedBookViewController: UICollectionViewDataSource {
 // MARK: - BookInfoViewController Delegate 설정
 
 extension SavedBookViewController: BookInfoViewControllerDelegate {
-    func updateData(_ viewController: UIViewController, index: Int) {
+    func updateData(_ viewController: UIViewController, index: Int?) {
+        guard let index = index else { return }
         let deleteBook = books?.remove(at: index)
 
         guard let deleteBook = deleteBook else { return }

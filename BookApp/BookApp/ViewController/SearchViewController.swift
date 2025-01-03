@@ -85,6 +85,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bookInfoVC = BookInfoViewController()
+        bookInfoVC.delegate = self
         bookInfoVC.configure(searchResult[indexPath.row], false, nil)
 
         self.navigationController?.modalPresentationStyle = .fullScreen
@@ -157,5 +158,11 @@ extension SearchViewController: UICollectionViewDataSource {
         header.configure(sectionType.title)
         
         return header
+    }
+}
+
+extension SearchViewController: BookInfoViewControllerDelegate {
+    func updateData(_ viewController: UIViewController, index: Int?) {
+        self.searchView.searchResultCollectionView.reloadData()
     }
 }
