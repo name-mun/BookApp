@@ -15,7 +15,8 @@ class SearchViewController: UIViewController {
 
     private let searchView = SearchView()
 
-    private var dataSouce = [Book]() // API로 부터 받은 데이터 저장
+    private var recentBook = [Book]() // 최근 본 책 저장
+    private var searchResult = [Book]() // API로 부터 받은 데이터 저장
 
     // MARK: - 생명주기 메서드
 
@@ -67,7 +68,7 @@ extension SearchViewController: UISearchBarDelegate {
         NetworkManager.shared.fetchData(title: searchText) { [weak self] (result: BookResponse?) in
             guard let self, let result else { return }
 
-            self.dataSouce = result.documents // 데이터 저장
+            self.searchResult = result.documents // 데이터 저장
 
             // 컬렉션뷰 리로드
             DispatchQueue.main.async {
@@ -83,7 +84,7 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bookInfoVC = BookInfoViewController()
-        bookInfoVC.configure(dataSouce[indexPath.row], false, nil)
+        bookInfoVC.configure(searchResult[indexPath.row], false, nil)
 
         self.navigationController?.modalPresentationStyle = .fullScreen
         present(bookInfoVC, animated: true)
@@ -96,7 +97,13 @@ extension SearchViewController: UICollectionViewDelegate {
 extension SearchViewController: UICollectionViewDataSource {
     // 섹셕별 아이템 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataSouce.count
+        switch Section(rawValue: section) {
+        case .recentBook:
+            return recentBook.count
+        case .searchResult:
+            return searchResult.count
+        default: return 0
+        }
     }
 
     // 셀 설정
@@ -105,7 +112,7 @@ extension SearchViewController: UICollectionViewDataSource {
             withReuseIdentifier: BookListCollectionViewCell.id,
             for: indexPath
         ) as? BookListCollectionViewCell else { return UICollectionViewCell() }
-        let book  = dataSouce[indexPath.row]
+        let book  = searchResult[indexPath.row]
         cell.configure(title: book.title, author: book.authors?.first, price: book.price)
         return cell
     }
