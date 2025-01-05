@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkManager {
 
@@ -52,5 +53,16 @@ class NetworkManager {
 
             completion(decodedData)
         }.resume() // 실행
+    }
+
+    // 이미지 다운로드
+    func downloadImage(_ thumbnail: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: thumbnail) else { return }
+        DispatchQueue.global().async {
+            if let imageData = try? Data(contentsOf: url),
+               let image = UIImage(data: imageData) {
+                completion(image)
+            }
+        }
     }
 }

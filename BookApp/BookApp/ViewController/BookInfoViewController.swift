@@ -9,9 +9,19 @@ import UIKit
 
 import SnapKit
 
+protocol BookInfoViewControllerDelegate: AnyObject {
+    func updateData(_ viewController: UIViewController, index: Int?)
+}
+
+
 class BookInfoViewController: UIViewController {
 
     // MARK: - UI 컴포넌트
+
+    private var book: Book?
+    private var index: Int?
+    private var isSavedView: Bool?
+    weak var delegate: BookInfoViewControllerDelegate?
 
     private let bookInfoView = BookInfoView()
 
@@ -52,12 +62,23 @@ class BookInfoViewController: UIViewController {
 
     // MARK: - 데이터 설정
 
-    func configure(_ book: Book) {
+    func configure(_ book: Book, _ isSavedView: Bool, _ index: Int?) {
+        self.book = book
+        self.isSavedView = isSavedView
+        self.index = index
+
         if let thumbnail = book.thumbnail {
-            downloadImage(thumbnail)
+            NetworkManager.shared.downloadImage(thumbnail) { [weak self] image in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    if let image = image {
+                        self.bookInfoView.configureImage(image)
+                    }
+                }
+            }
         }
 
-        bookInfoView.configureData(book)
+        bookInfoView.configureData(book, isSavedView)
     }
 }
 
@@ -66,29 +87,25 @@ class BookInfoViewController: UIViewController {
 extension BookInfoViewController {
     // 닫기 버튼 설정
     private func closeButtonTapped() {
+        self.delegate?.updateData(self, index: nil)
         dismiss(animated: true)
     }
 
     // 담기 버튼 설정
     private func saveButtonTapped() {
-        print("저장")
-    }
-}
+        guard let book = self.book else { return }
 
-// MARK: - 이미지 다운로드
+        guard let isSavedView = isSavedView else { return }
 
-extension BookInfoViewController {
-    // 이미지 다운로드
-    func downloadImage(_ thumbnail: String) {
-        guard let url = URL(string: thumbnail) else { return }
+        if isSavedView {
+            guard let index = index else { return }
+            self.delegate?.updateData(self, index: index)
 
-        DispatchQueue.global().async {
-            if let imageData = try? Data(contentsOf: url),
-               let image = UIImage(data: imageData) {
-                DispatchQueue.main.async {
-                    self.bookInfoView.configureImage(image)
-                }
-            }
+        } else {
+            UserDataManager.shared.createData(book)
+
         }
+        self.delegate?.updateData(self, index: nil)
+        dismiss(animated: true)
     }
 }

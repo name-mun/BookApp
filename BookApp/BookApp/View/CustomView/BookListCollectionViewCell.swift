@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-class SearchResultCollectionViewCell: UICollectionViewCell {
+class BookListCollectionViewCell: UICollectionViewCell {
 
-    static let id = "SearchResultCollectionViewCell"
+    static let id = "BookListCollectionViewCell"
 
     // MARK: - UI 컴포넌트
 
@@ -89,19 +89,19 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
 
     // MARK: - 데이터 설정
 
-    func configure(_ book: Book) {
+    func configure(title: String?, author: String?, price: Int?) {
         // 제목 설정
-        if let title = book.title {
+        if let title = title {
             titleLabel.text = title
         }
 
         // 저자 설정
-        if let authors = book.authors {
-            authorLabel.text = authors.first
+        if let author = author {
+            authorLabel.text = author
         }
 
         // 가격 설정
-        if let price = book.price {
+        if let price = price {
             priceLabel.text = PriceFormatterModel.wonFormatter(price)
         }
     }

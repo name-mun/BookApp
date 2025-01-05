@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA0069452D276E43001A7F14 /* SaveBook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0069442D276E43001A7F14 /* SaveBook+CoreDataProperties.swift */; };
+		BA2EC5622D26618600E771D1 /* SaveBook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2EC5602D26618600E771D1 /* SaveBook+CoreDataClass.swift */; };
 		BA4DC6462D2239D600F5A66D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA4DC6452D2239D600F5A66D /* SnapKit */; };
 		BA7824832D23B8DB002FAD72 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BA7824822D23B8DB002FAD72 /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA0069442D276E43001A7F14 /* SaveBook+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveBook+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BA2EC5602D26618600E771D1 /* SaveBook+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveBook+CoreDataClass.swift"; sourceTree = "<group>"; };
 		BA41B6382D1EC57A0002FC87 /* BookApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA7824822D23B8DB002FAD72 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,6 +56,8 @@
 		BA41B62F2D1EC57A0002FC87 = {
 			isa = PBXGroup;
 			children = (
+				BA0069442D276E43001A7F14 /* SaveBook+CoreDataProperties.swift */,
+				BA2EC5602D26618600E771D1 /* SaveBook+CoreDataClass.swift */,
 				BA7824822D23B8DB002FAD72 /* Config.xcconfig */,
 				BA41B63A2D1EC57A0002FC87 /* BookApp */,
 				BA41B6392D1EC57A0002FC87 /* Products */,
@@ -145,6 +151,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA0069452D276E43001A7F14 /* SaveBook+CoreDataProperties.swift in Sources */,
+				BA2EC5622D26618600E771D1 /* SaveBook+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

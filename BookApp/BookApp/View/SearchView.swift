@@ -20,12 +20,20 @@ class SearchView: UIView {
         return searchBar
     }()
 
-    lazy var SearchResultCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.id)
+    // 검색 결과 컬렉션뷰
+    lazy var searchResultCollectionView: BookListCollectionView = {
+        let collectionView = BookListCollectionView()
         collectionView.register(SearchResultCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultCollectionViewHeader.id)
         return collectionView
+    }()
+
+    let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "검색 내역이 없습니다."
+        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 20)
+        label.textColor = .black
+        return label
     }()
 
     // TODO: - 검색 결과 리스트 (컬렉션뷰)
@@ -48,7 +56,8 @@ class SearchView: UIView {
 
         [
             bookSearchBar,
-            SearchResultCollectionView
+            searchResultCollectionView,
+            emptyLabel
         ].forEach {
             addSubview($0)
         }
@@ -58,43 +67,26 @@ class SearchView: UIView {
             $0.horizontalEdges.equalTo(safeAreaLayoutGuide.snp.horizontalEdges).inset(15)
         }
 
-        SearchResultCollectionView.snp.makeConstraints {
+        searchResultCollectionView.snp.makeConstraints {
             $0.top.equalTo(bookSearchBar.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(10)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
+
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
+}
 
-    private func createLayout() -> UICollectionViewLayout {
-
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(0.2)
-        )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
-        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(44)
-        )
-
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        section.boundarySupplementaryItems = [header]
-
-        return UICollectionViewCompositionalLayout(section: section)
+extension SearchView {
+    func configureLayout(_ searchResultIsEmpty: Bool) {
+        if searchResultIsEmpty {
+            searchResultCollectionView.isHidden = true
+            emptyLabel.isHidden = false
+        } else {
+            searchResultCollectionView.isHidden = false
+            emptyLabel.isHidden = true
+        }
     }
 }
