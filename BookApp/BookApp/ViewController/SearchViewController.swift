@@ -108,6 +108,9 @@ extension SearchViewController: UICollectionViewDataSource {
 
         let recentBookIsEmpty = recentBook.count == 0 ? true : false
         let searchResultIsEmpty = searchResult.count == 0 ? true : false
+
+        searchView.configureLayout(searchResultIsEmpty)
+
         let layout = searchView.searchResultCollectionView.searchViewLayout(recentBookIsEmpty: recentBookIsEmpty, searchResultIsEmpty: searchResultIsEmpty) // 빈 섹션 숨기기
 
         searchView.searchResultCollectionView.setCollectionViewLayout(layout, animated: true)

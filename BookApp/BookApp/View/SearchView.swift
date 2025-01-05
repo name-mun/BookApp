@@ -20,10 +20,20 @@ class SearchView: UIView {
         return searchBar
     }()
 
+    // 검색 결과 컬렉션뷰
     lazy var searchResultCollectionView: BookListCollectionView = {
         let collectionView = BookListCollectionView()
         collectionView.register(SearchResultCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultCollectionViewHeader.id)
         return collectionView
+    }()
+
+    let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "검색 내역이 없습니다."
+        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 20)
+        label.textColor = .black
+        return label
     }()
 
     // TODO: - 검색 결과 리스트 (컬렉션뷰)
@@ -46,7 +56,8 @@ class SearchView: UIView {
 
         [
             bookSearchBar,
-            searchResultCollectionView
+            searchResultCollectionView,
+            emptyLabel
         ].forEach {
             addSubview($0)
         }
@@ -60,6 +71,22 @@ class SearchView: UIView {
             $0.top.equalTo(bookSearchBar.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(10)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-10)
+        }
+
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+    }
+}
+
+extension SearchView {
+    func configureLayout(_ searchResultIsEmpty: Bool) {
+        if searchResultIsEmpty {
+            searchResultCollectionView.isHidden = true
+            emptyLabel.isHidden = false
+        } else {
+            searchResultCollectionView.isHidden = false
+            emptyLabel.isHidden = true
         }
     }
 }

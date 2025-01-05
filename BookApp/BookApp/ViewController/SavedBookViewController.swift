@@ -109,7 +109,7 @@ extension SavedBookViewController: UICollectionViewDataSource {
     // 컬렉션뷰 리로드
     func collectionViewReload() {
         savedBookView.savedBookCollectionView.reloadData()
-        
+
         let layout = savedBookView.savedBookCollectionView.savedViewLayout()
         savedBookView.savedBookCollectionView.setCollectionViewLayout(layout, animated: true) // 레이아웃 설정
     }
