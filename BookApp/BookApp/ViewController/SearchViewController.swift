@@ -35,6 +35,7 @@ class SearchViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         searchView.searchResultCollectionView.reloadData()
+        collectionViewReload()
     }
 
     // MARK: - 레이아웃 설정
@@ -73,11 +74,10 @@ extension SearchViewController: UISearchBarDelegate {
 
             // 컬렉션뷰 리로드
             DispatchQueue.main.async {
-                self.searchView.searchResultCollectionView.reloadData()
+                self.collectionViewReload()
             }
         }
     }
-
 }
 
 // MARK: - searchResultCollectionView Delegate 설정
@@ -102,6 +102,17 @@ extension SearchViewController: UICollectionViewDelegate {
 // MARK: - searchResultCollectionView DataSource 설정
 
 extension SearchViewController: UICollectionViewDataSource {
+    // 컬렉션뷰 리로드
+    func collectionViewReload() {
+        searchView.searchResultCollectionView.reloadData()
+
+        let recentBookIsEmpty = recentBook.count == 0 ? true : false
+        let searchResultIsEmpty = searchResult.count == 0 ? true : false
+        let layout = searchView.searchResultCollectionView.searchViewLayout(recentBookIsEmpty: recentBookIsEmpty, searchResultIsEmpty: searchResultIsEmpty) // 빈 섹션 숨기기
+
+        searchView.searchResultCollectionView.setCollectionViewLayout(layout, animated: true)
+    }
+
     // 섹션 갯수
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return Section.allCases.count
@@ -164,8 +175,10 @@ extension SearchViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - BookInfoViewController Delegate 설정
+
 extension SearchViewController: BookInfoViewControllerDelegate {
     func updateData(_ viewController: UIViewController, index: Int?) {
-        self.searchView.searchResultCollectionView.reloadData()
+        collectionViewReload()
     }
 }

@@ -20,8 +20,8 @@ class SearchView: UIView {
         return searchBar
     }()
 
-    lazy var searchResultCollectionView: UICollectionView = {
-        let collectionView = BookListCollectionView(2)
+    lazy var searchResultCollectionView: BookListCollectionView = {
+        let collectionView = BookListCollectionView()
         collectionView.register(SearchResultCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultCollectionViewHeader.id)
         return collectionView
     }()
