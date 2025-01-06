@@ -16,7 +16,6 @@ class SearchResultCollectionViewHeader: UICollectionReusableView {
     // 섹션 제목 라벨
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "검색 결과" // 테스트용 텍스트
         label.textAlignment = .left
         label.textColor = .black
         label.font = .boldSystemFont(ofSize: 25)

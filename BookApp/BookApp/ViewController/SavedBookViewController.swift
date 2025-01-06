@@ -33,7 +33,7 @@ class SavedBookViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         books = UserDataManager.shared.readData()
-        savedBookView.savedBookCollectionView.reloadData()
+        collectionViewReload()
     }
 
     // MARK: - 레이아웃 설정
@@ -106,6 +106,14 @@ extension SavedBookViewController: UICollectionViewDelegate {
 // MARK: - 컬렉션뷰 DataSource 설정
 
 extension SavedBookViewController: UICollectionViewDataSource {
+    // 컬렉션뷰 리로드
+    func collectionViewReload() {
+        savedBookView.savedBookCollectionView.reloadData()
+
+        let layout = savedBookView.savedBookCollectionView.savedViewLayout()
+        savedBookView.savedBookCollectionView.setCollectionViewLayout(layout, animated: true) // 레이아웃 설정
+    }
+
     // 섹셕별 아이템 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let books = books else { return 0 }
@@ -130,12 +138,13 @@ extension SavedBookViewController: UICollectionViewDataSource {
 // MARK: - BookInfoViewController Delegate 설정
 
 extension SavedBookViewController: BookInfoViewControllerDelegate {
-    func updateData(_ viewController: UIViewController, index: Int) {
+    func updateData(_ viewController: UIViewController, index: Int?) {
+        guard let index = index else { return }
         let deleteBook = books?.remove(at: index)
 
         guard let deleteBook = deleteBook else { return }
 
         UserDataManager.shared.deleteData(deleteBook)
-        savedBookView.savedBookCollectionView.reloadData()
+        collectionViewReload()
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol BookInfoViewControllerDelegate: AnyObject {
-    func updateData(_ viewController: UIViewController, index: Int)
+    func updateData(_ viewController: UIViewController, index: Int?)
 }
 
 
@@ -68,7 +68,14 @@ class BookInfoViewController: UIViewController {
         self.index = index
 
         if let thumbnail = book.thumbnail {
-            downloadImage(thumbnail)
+            NetworkManager.shared.downloadImage(thumbnail) { [weak self] image in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    if let image = image {
+                        self.bookInfoView.configureImage(image)
+                    }
+                }
+            }
         }
 
         bookInfoView.configureData(book, isSavedView)
@@ -80,6 +87,7 @@ class BookInfoViewController: UIViewController {
 extension BookInfoViewController {
     // 닫기 버튼 설정
     private func closeButtonTapped() {
+        self.delegate?.updateData(self, index: nil)
         dismiss(animated: true)
     }
 
@@ -97,24 +105,7 @@ extension BookInfoViewController {
             UserDataManager.shared.createData(book)
 
         }
+        self.delegate?.updateData(self, index: nil)
         dismiss(animated: true)
-    }
-}
-
-// MARK: - 이미지 다운로드
-
-extension BookInfoViewController {
-    // 이미지 다운로드
-    func downloadImage(_ thumbnail: String) {
-        guard let url = URL(string: thumbnail) else { return }
-
-        DispatchQueue.global().async {
-            if let imageData = try? Data(contentsOf: url),
-               let image = UIImage(data: imageData) {
-                DispatchQueue.main.async {
-                    self.bookInfoView.configureImage(image)
-                }
-            }
-        }
     }
 }
